@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { Param, Body, Get, Post, Put } from '@nestjs/common/decorators';
+import { Param, Body, Get, Post, Put, Delete } from '@nestjs/common/decorators';
 import { response } from 'express';
 import { TodosService } from './todos.service';
 import { createToDoDTO, updateToDoDto } from './create-todo.dto';
@@ -22,5 +22,11 @@ export class TodosController {
 	updateToDo(@Param('id') id: string, @Body() updateTodo: updateToDoDto) {
 		const index = parseInt(id, 10);
 		return this.todosService.putTodo(index, updateTodo.newTitle);
+	}
+
+	@Delete(':id')
+	deleteToDo(@Param('id') id: string) {
+		const index = parseInt(id, 10);
+		return this.todosService.deleteTodo(index);
 	}
 }

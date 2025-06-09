@@ -24,4 +24,14 @@ export class TodosService {
 			toDo: this.toDoList[index],
 		}
 	}
+	
+	deleteTodo(index: number) {
+		delete this.toDoList[index]
+		this.toDoList = this.toDoList.filter((n) => {return n != undefined})
+
+		return {
+			message: "deleted",
+			toDoS: this.toDoList
+		}
+	}
 }
