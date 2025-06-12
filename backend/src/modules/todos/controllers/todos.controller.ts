@@ -1,8 +1,8 @@
 import { Controller } from '@nestjs/common';
 import { Param, Body, Get, Post, Put, Delete } from '@nestjs/common/decorators';
 import { response } from 'express';
-import { TodosService } from './todos.service';
-import { createToDoDTO, updateToDoDto } from './create-todo.dto';
+import { TodosService } from '../services/todos.service';
+import { createToDoDTO, updateToDoDto } from '../dtos/create-todo.dto';
 
 @Controller('todos')
 export class TodosController {
