@@ -1,37 +1,52 @@
 import { Injectable } from '@nestjs/common';
-
+import { PrismaService } from 'prisma/prisma.service'; 
 
 @Injectable()
 export class TodosService {
-	private toDoList: string[] = []
+	constructor (private prisma: PrismaService){}
 
-	getAll() {
-		return (this.toDoList);
+	getAllTodos() {
+		const todos = this.prisma.todo.findMany()
+		if (!todos[0]) {
+			return {message: "todos is clesar!"}
+		}
+		return todos
 	}
 
-	createNewTodo(title: string) {
-		this.toDoList.push(title);
-		return {
-			message: "Created",
-			toDo: title,
+	createNewTodo(title: string, text: string) {
+		try {			
+			 return this.prisma.todo.create({
+				data: {
+					title: title,
+					text: text,
+					isActive: true
+				}
+			}
+			); 
+			
+		} catch (error) {    
+			return { message: "Something went wrong!" }
 		}
 	}
 
-	putTodo(index: number, newTitle: string) {
-		this.toDoList[index] = newTitle;
-		return {
-			message: "updated",
-			toDo: this.toDoList[index],
+	async putTodo(index: number, newTitle: string, newText: string) {
+		try {
+			return await this.prisma.todo.update({
+				where: { id: index },
+				data: {title: newTitle, text: newText}
+			})
+		} catch (error) {
+			return {message: "something wenr wrong!"}
 		}
 	}
 	
 	deleteTodo(index: number) {
-		delete this.toDoList[index]
-		this.toDoList = this.toDoList.filter((n) => {return n != undefined})
-
-		return {
-			message: "deleted",
-			toDoS: this.toDoList
+		try {
+			return this.prisma.todo.delete({
+				where: {id: index}
+			})
+		} catch (error) {
+			return{message: "something went wrong"}
 		}
 	}
 }

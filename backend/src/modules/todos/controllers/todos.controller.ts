@@ -10,18 +10,18 @@ export class TodosController {
 
 	@Get()
 	getAllTodos() {
-		return this.todosService.getAll();
+		return this.todosService.getAllTodos();
 	}
 
-	@Post()
+	@Post('/createToDo')
 	createToDo(@Body() createToDo: createToDoDTO) {
-		return this.todosService.createNewTodo(createToDo.title)
+		return this.todosService.createNewTodo(createToDo.title, createToDo.text);
 	}
 
 	@Put(':id')
 	updateToDo(@Param('id') id: string, @Body() updateTodo: updateToDoDto) {
-		const index = parseInt(id, 10);
-		return this.todosService.putTodo(index, updateTodo.newTitle);
+		const index = parseInt(id, 10)
+		return this.todosService.putTodo(index, updateTodo.newTitle, updateTodo.newText)
 	}
 
 	@Delete(':id')
