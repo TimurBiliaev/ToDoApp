@@ -3,17 +3,18 @@ import { Param, Body, Get, Post, Put, Delete } from '@nestjs/common/decorators';
 import { response } from 'express';
 import { TodosService } from '../services/todos.service';
 import { createToDoDTO, updateToDoDto } from '../dtos/create-todo.dto';
+import { TodosRoutes } from '../todos.constants';
 
-@Controller('todos')
+@Controller(TodosRoutes.MODULE)
 export class TodosController {
 	constructor(private readonly todosService: TodosService){}
 
-	@Get()
+	@Get(TodosRoutes.GET_FILTERED)
 	getAllTodos() {
 		return this.todosService.getAllTodos();
 	}
 
-	@Post('/createToDo')
+	@Post(TodosRoutes.CREATE_TODO)
 	createToDo(@Body() createToDo: createToDoDTO) {
 		return this.todosService.createNewTodo(createToDo.title, createToDo.text);
 	}

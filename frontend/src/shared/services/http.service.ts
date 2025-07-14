@@ -1,6 +1,8 @@
-const API_URL = process.env.REACT_APP_API_URL
+export const API_URL = process.env.REACT_APP_API_URL
 
-export async function post<T>(endpoint: string, data: unknown ): Promise<T> {
+export async function post<T>(endpoint: string, data: unknown): Promise<T> {
+	console.log("FULL URL:", `${API_URL}${endpoint}`); 
+
 	const res = await fetch(`${API_URL}${endpoint}`, {
 		 method: 'POST',
 		 headers: {

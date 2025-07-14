@@ -1,9 +1,11 @@
 import React from 'react';
+import TodoApp from './modules/todos/todos.component';
+import "@blueprintjs/core/lib/css/blueprint.css";
 
 function App() {
   return (
-    <div>
-      <h1>Hello, TypeScript + React!</h1>
+    <div className="app">
+      <TodoApp />
     </div>
   );
 }

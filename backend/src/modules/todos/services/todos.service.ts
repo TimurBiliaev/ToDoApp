@@ -5,7 +5,7 @@ import { PrismaService } from 'prisma/prisma.service';
 export class TodosService {
 	constructor (private prisma: PrismaService){}
 
-	getAllTodos() {
+	public getAllTodos() {
 		const todos = this.prisma.todo.findMany()
 		if (!todos[0]) {
 			return {message: "todos is clesar!"}
@@ -13,17 +13,16 @@ export class TodosService {
 		return todos
 	}
 
-	createNewTodo(title: string, text: string) {
-		try {			
-			 return this.prisma.todo.create({
+	public createNewTodo(title: string, text: string) {
+		try {		
+			const newTodo = this.prisma.todo.create({
 				data: {
 					title: title,
 					text: text,
 					isActive: true
 				}
-			}
-			); 
-			
+			})
+			 return newTodo		
 		} catch (error) {    
 			return { message: "Something went wrong!" }
 		}
@@ -48,5 +47,10 @@ export class TodosService {
 		} catch (error) {
 			return{message: "something went wrong"}
 		}
+	}
+
+	searchToDo(title: string) {
+		const todos = this.prisma.todo.findMany();
+		return{ message: "Search result!"}
 	}
 }
